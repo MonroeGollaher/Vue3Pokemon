@@ -2,36 +2,38 @@
   <div class="home">
     <h1>Welcome</h1>
   </div>
-  <pokemon-component @click="addPokemon" v-for="pokemon in allPokemon" :key="pokemon.name" :poke-prop="pokemon" />
+  <pokemon-component
+    @click="setActive(pokemon.name)"
+    v-for="pokemon in allPokemon"
+    :key="pokemon.name"
+    :poke-prop="pokemon"
+  />
+  <active-pokemon-component />
 </template>
 
 <script>
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted } from 'vue'
 import { pokemonService } from '../services/PokemonService'
 import PokemonComponent from '../components/PokemonComponent'
 import { AppState } from '../AppState'
 import { myPokemonService } from '../services/MyPokemonService'
+import ActivePokemonComponent from '../components/ActivePokemonComponent'
 export default {
   name: 'Home',
-  components: { PokemonComponent },
+  components: { PokemonComponent, ActivePokemonComponent },
   setup() {
-    const state = reactive({
-      newPokemon: {}
-    })
     onMounted(() => {
       pokemonService.getAllPokemon()
     })
     return {
-      state,
       allPokemon: computed(() => AppState.allPokemon),
-      addPokemon() {
-        myPokemonService.addPokemon(state.newPokemon.name)
+      addPokemon(name) {
+        myPokemonService.addPokemon(name)
       },
-      setActive(id) {
-        pokemonService.setActive(id)
+      setActive(name) {
+        pokemonService.setActive(name)
       }
     }
   }
-
 }
 </script>

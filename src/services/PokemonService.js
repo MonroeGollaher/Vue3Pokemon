@@ -11,6 +11,16 @@ class PokemonService {
       console.error(error)
     }
   }
+
+  async setActive(name) {
+    try {
+      const res = await pokeApi.get('/' + name)
+      AppState.activePokemon = res.data
+      console.log(res.data)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 }
 
 export const pokemonService = new PokemonService()

@@ -1,5 +1,5 @@
 <template>
-  <div class="mypokemon-component">
+  <div class="my-pokemon-component">
     <li>
       {{ myPokeProp.name }}
     </li>
